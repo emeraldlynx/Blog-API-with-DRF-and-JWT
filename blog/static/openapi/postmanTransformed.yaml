@@ -1,0 +1,1061 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: secure_t
+  description: Blog API on Django Rest Framework with JSON Web Token authentication!!!
+  contact: {}
+host: localhost:8000
+basePath: /api/blog
+securityDefinitions: {}
+schemes:
+- http
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  /auth/register/:
+    post:
+      summary: Register user
+      tags:
+      - Auth
+      operationId: Registeruser
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      - name: username
+        in: formData
+        required: true
+        type: string
+        description: ''
+      - name: password
+        in: formData
+        required: true
+        type: string
+        description: ''
+      - name: password2
+        in: formData
+        required: true
+        type: string
+        description: ''
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/NewRequest'
+          examples:
+            application/json:
+              username: user3
+          headers:
+            Date:
+              type: string
+              default: Fri, 10 Sep 2021 16:58:18 GMT
+            Server:
+              type: string
+              default: WSGIServer/0.2 CPython/3.9.6
+            Vary:
+              type: string
+              default: Accept, Cookie
+            Allow:
+              type: string
+              default: POST, OPTIONS
+            X-Frame-Options:
+              type: string
+              default: DENY
+            Content-Length:
+              type: string
+              default: '20'
+            X-Content-Type-Options:
+              type: string
+              default: nosniff
+            Referrer-Policy:
+              type: string
+              default: same-origin
+  /auth/login/:
+    post:
+      summary: Login and obtain JWT
+      tags:
+      - Auth
+      operationId: LoginandobtainJWT
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      - name: username
+        in: formData
+        required: true
+        type: string
+        description: ''
+      - name: password
+        in: formData
+        required: true
+        type: string
+        description: ''
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/http%3A~1~1localhost%3A8000~1api~1blog~1auth~1login~1'
+          examples:
+            application/json:
+              refresh: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTYzMTM3OTU2NSwianRpIjoiMTgxOWNkNjllNmFmNDljN2IzYjZiMjA5YTI0NjVkMDEiLCJ1c2VyX2lkIjo0fQ.NGBCq8EPQCaxXH7TctdqUe5aHy6udIDyw2mSdbW7BFk
+              access: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMxMjkzNDY1LCJqdGkiOiI1NDgyM2JkMWE1Yjk0MjZmODhiZThkYjYyNThhZDBiYyIsInVzZXJfaWQiOjR9.POr9P7yG41xVeUxvOpT0GxQt763QLxg-J09CfIHLYJ4
+          headers:
+            Date:
+              type: string
+              default: Fri, 10 Sep 2021 16:59:25 GMT
+            Server:
+              type: string
+              default: WSGIServer/0.2 CPython/3.9.6
+            Vary:
+              type: string
+              default: Accept
+            Allow:
+              type: string
+              default: POST, OPTIONS
+            X-Frame-Options:
+              type: string
+              default: DENY
+            Content-Length:
+              type: string
+              default: '438'
+            X-Content-Type-Options:
+              type: string
+              default: nosniff
+            Referrer-Policy:
+              type: string
+              default: same-origin
+  /auth/login/refresh/:
+    post:
+      summary: Refresh JWT
+      tags:
+      - Auth
+      operationId: RefreshJWT
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/RefreshJWTRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/RefreshJWT'
+          examples:
+            application/json:
+              access: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMxMzE1NjE3LCJqdGkiOiJjYWYyZTQ0NGRmMzM0NDI3OGVlNjY2ZmE0ZmVhZDM3ZSIsInVzZXJfaWQiOjR9.UUX1NOZNJmzrDY2caEoYXx6IAkIR2x6Zi4eFdWCxpDg
+          headers:
+            Date:
+              type: string
+              default: Fri, 10 Sep 2021 23:08:37 GMT
+            Server:
+              type: string
+              default: WSGIServer/0.2 CPython/3.9.6
+            Vary:
+              type: string
+              default: Accept
+            Allow:
+              type: string
+              default: POST, OPTIONS
+            X-Frame-Options:
+              type: string
+              default: DENY
+            Content-Length:
+              type: string
+              default: '218'
+            X-Content-Type-Options:
+              type: string
+              default: nosniff
+            Referrer-Policy:
+              type: string
+              default: same-origin
+  /posts/:
+    get:
+      summary: Get Post List
+      tags:
+      - Post
+      operationId: GetPostList
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GetPostList'
+          examples:
+            application/json:
+            - id: 1
+              title: Dogs
+              body: Wow, its so excited!
+              owner: user1
+              created: 2021-09-09T22:47:27.828598Z
+          headers:
+            Date:
+              type: string
+              default: Sat, 11 Sep 2021 01:03:30 GMT
+            Server:
+              type: string
+              default: WSGIServer/0.2 CPython/3.9.6
+            Vary:
+              type: string
+              default: Accept, Cookie
+            Allow:
+              type: string
+              default: GET, POST, HEAD, OPTIONS
+            X-Frame-Options:
+              type: string
+              default: DENY
+            Content-Length:
+              type: string
+              default: '111'
+            X-Content-Type-Options:
+              type: string
+              default: nosniff
+            Referrer-Policy:
+              type: string
+              default: same-origin
+    post:
+      summary: Create Post
+      tags:
+      - Post
+      operationId: CreatePost
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/CreatePostRequest'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/CreatePost'
+          examples:
+            application/json:
+              id: 2
+              title: Cats
+              body: Haha, cute cats ^-^
+              owner: user3
+              created: 2021-09-10T23:30:08.330184Z
+          headers:
+            Date:
+              type: string
+              default: Fri, 10 Sep 2021 23:30:08 GMT
+            Server:
+              type: string
+              default: WSGIServer/0.2 CPython/3.9.6
+            Vary:
+              type: string
+              default: Accept, Cookie
+            Allow:
+              type: string
+              default: GET, POST, HEAD, OPTIONS
+            X-Frame-Options:
+              type: string
+              default: DENY
+            Content-Length:
+              type: string
+              default: '108'
+            X-Content-Type-Options:
+              type: string
+              default: nosniff
+            Referrer-Policy:
+              type: string
+              default: same-origin
+  /posts/2/:
+    put:
+      summary: Update Post
+      tags:
+      - Post
+      operationId: UpdatePost
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/UpdatePostRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/UpdatePost'
+          examples:
+            application/json:
+              id: 2
+              title: Cute cats!
+              body: Haha, cute cats ^-^. I like it!
+              owner: user3
+              created: 2021-09-10T23:30:08.330184Z
+          headers:
+            Date:
+              type: string
+              default: Fri, 10 Sep 2021 23:37:36 GMT
+            Server:
+              type: string
+              default: WSGIServer/0.2 CPython/3.9.6
+            Vary:
+              type: string
+              default: Accept, Cookie
+            Allow:
+              type: string
+              default: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+            X-Frame-Options:
+              type: string
+              default: DENY
+            Content-Length:
+              type: string
+              default: '126'
+            X-Content-Type-Options:
+              type: string
+              default: nosniff
+            Referrer-Policy:
+              type: string
+              default: same-origin
+    delete:
+      summary: Delete Post
+      tags:
+      - Post
+      operationId: DeletePost
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      responses:
+        '204':
+          description: No Content
+          headers:
+            Date:
+              type: string
+              default: Fri, 10 Sep 2021 23:43:00 GMT
+            Server:
+              type: string
+              default: WSGIServer/0.2 CPython/3.9.6
+            Vary:
+              type: string
+              default: Accept, Cookie
+            Allow:
+              type: string
+              default: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+            X-Frame-Options:
+              type: string
+              default: DENY
+            Content-Length:
+              type: string
+              default: '0'
+            X-Content-Type-Options:
+              type: string
+              default: nosniff
+            Referrer-Policy:
+              type: string
+              default: same-origin
+  /posts/1/:
+    get:
+      summary: Get Post Detail
+      tags:
+      - Post
+      operationId: GetPostDetail
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/GetPostDetail'
+          examples:
+            application/json:
+              id: 1
+              title: Dogs
+              body: Wow, its so excited!
+              owner: user1
+              created: 2021-09-09T22:47:27.828598Z
+          headers:
+            Date:
+              type: string
+              default: Sat, 11 Sep 2021 01:03:44 GMT
+            Server:
+              type: string
+              default: WSGIServer/0.2 CPython/3.9.6
+            Vary:
+              type: string
+              default: Accept, Cookie
+            Allow:
+              type: string
+              default: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+            X-Frame-Options:
+              type: string
+              default: DENY
+            Content-Length:
+              type: string
+              default: '109'
+            X-Content-Type-Options:
+              type: string
+              default: nosniff
+            Referrer-Policy:
+              type: string
+              default: same-origin
+  /comments/:
+    get:
+      summary: Get Comment List
+      tags:
+      - Comment
+      operationId: GetCommentList
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GetCommentList'
+          examples:
+            application/json:
+            - id: 1
+              body: Yeah, nice :)
+              post: 1
+              owner: admin
+              created: '"2021-09-09T23:56:06.411299Z"'
+              parent: 'null'
+            - id: 2
+              body: Thanks!
+              post: 1
+              owner: user1
+              created: '"2021-09-10T11:22:05.715526Z"'
+              parent: '1'
+            - id: 3
+              body: It's really cool
+              post: 1
+              owner: user1
+              created: '"2021-09-10T11:22:35.512408Z"'
+              parent: '1'
+          headers:
+            Date:
+              type: string
+              default: Fri, 10 Sep 2021 23:32:33 GMT
+            Server:
+              type: string
+              default: WSGIServer/0.2 CPython/3.9.6
+            Vary:
+              type: string
+              default: Accept, Cookie
+            Allow:
+              type: string
+              default: GET, POST, HEAD, OPTIONS
+            X-Frame-Options:
+              type: string
+              default: DENY
+            Content-Length:
+              type: string
+              default: '325'
+            X-Content-Type-Options:
+              type: string
+              default: nosniff
+            Referrer-Policy:
+              type: string
+              default: same-origin
+    post:
+      summary: Create Comment
+      tags:
+      - Comment
+      operationId: CreateComment
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/CreateCommentRequest'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/CreateComment'
+          examples:
+            application/json:
+              id: 4
+              body: +
+              post: 1
+              owner: user3
+              created: 2021-09-10T23:55:06.452231Z
+              parent: 3
+          headers:
+            Date:
+              type: string
+              default: Fri, 10 Sep 2021 23:55:06 GMT
+            Server:
+              type: string
+              default: WSGIServer/0.2 CPython/3.9.6
+            Vary:
+              type: string
+              default: Accept, Cookie
+            Allow:
+              type: string
+              default: GET, POST, HEAD, OPTIONS
+            X-Frame-Options:
+              type: string
+              default: DENY
+            Content-Length:
+              type: string
+              default: '95'
+            X-Content-Type-Options:
+              type: string
+              default: nosniff
+            Referrer-Policy:
+              type: string
+              default: same-origin
+  /comments/3/:
+    get:
+      summary: Get Comment Detial
+      tags:
+      - Comment
+      operationId: GetCommentDetial
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/GetCommentDetial'
+          examples:
+            application/json:
+              id: 1
+              body: Yeah, nice :)
+              post: 1
+              owner: admin
+              created: 2021-09-09T23:56:06.411299Z
+              parent: ''
+          headers:
+            Date:
+              type: string
+              default: Fri, 10 Sep 2021 23:50:00 GMT
+            Server:
+              type: string
+              default: WSGIServer/0.2 CPython/3.9.6
+            Vary:
+              type: string
+              default: Accept, Cookie
+            Allow:
+              type: string
+              default: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+            X-Frame-Options:
+              type: string
+              default: DENY
+            Content-Length:
+              type: string
+              default: '110'
+            X-Content-Type-Options:
+              type: string
+              default: nosniff
+            Referrer-Policy:
+              type: string
+              default: same-origin
+  /comments/4/:
+    put:
+      summary: Update Comment
+      tags:
+      - Comment
+      operationId: UpdateComment
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/UpdateCommentRequest'
+      responses:
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Don%27thavepermissoins1'
+          examples:
+            application/json:
+              detail: You do not have permission to perform this action.
+          headers:
+            Date:
+              type: string
+              default: Fri, 10 Sep 2021 23:56:17 GMT
+            Server:
+              type: string
+              default: WSGIServer/0.2 CPython/3.9.6
+            Vary:
+              type: string
+              default: Accept, Cookie
+            Allow:
+              type: string
+              default: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+            X-Frame-Options:
+              type: string
+              default: DENY
+            Content-Length:
+              type: string
+              default: '63'
+            X-Content-Type-Options:
+              type: string
+              default: nosniff
+            Referrer-Policy:
+              type: string
+              default: same-origin
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/UpdateComment'
+          examples:
+            application/json:
+              id: 4
+              body: Think so )))))0)0)0)0
+              post: 1
+              owner: user3
+              created: 2021-09-10T23:55:06.452231Z
+              parent: 3
+          headers:
+            Date:
+              type: string
+              default: Fri, 10 Sep 2021 23:57:53 GMT
+            Server:
+              type: string
+              default: WSGIServer/0.2 CPython/3.9.6
+            Vary:
+              type: string
+              default: Accept, Cookie
+            Allow:
+              type: string
+              default: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+            X-Frame-Options:
+              type: string
+              default: DENY
+            Content-Length:
+              type: string
+              default: '115'
+            X-Content-Type-Options:
+              type: string
+              default: nosniff
+            Referrer-Policy:
+              type: string
+              default: same-origin
+    delete:
+      summary: Delete Comment
+      tags:
+      - Comment
+      operationId: DeleteComment
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      responses:
+        '204':
+          description: No Content
+          headers:
+            Date:
+              type: string
+              default: Fri, 10 Sep 2021 23:58:38 GMT
+            Server:
+              type: string
+              default: WSGIServer/0.2 CPython/3.9.6
+            Vary:
+              type: string
+              default: Accept, Cookie
+            Allow:
+              type: string
+              default: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+            X-Frame-Options:
+              type: string
+              default: DENY
+            Content-Length:
+              type: string
+              default: '0'
+            X-Content-Type-Options:
+              type: string
+              default: nosniff
+            Referrer-Policy:
+              type: string
+              default: same-origin
+  /users/:
+    get:
+      summary: Get User List
+      tags:
+      - User
+      operationId: GetUserList
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GetUserList'
+          examples:
+            application/json:
+            - id: 2
+              username: user1
+              posts:
+              - 1
+              comments: []
+            - id: 3
+              username: user2
+              posts: []
+              comments: []
+            - id: 4
+              username: user3
+              posts: []
+              comments: []
+          headers:
+            Date:
+              type: string
+              default: Sat, 11 Sep 2021 00:59:11 GMT
+            Server:
+              type: string
+              default: WSGIServer/0.2 CPython/3.9.6
+            Vary:
+              type: string
+              default: Accept, Cookie
+            Allow:
+              type: string
+              default: GET, HEAD, OPTIONS
+            X-Frame-Options:
+              type: string
+              default: DENY
+            Content-Length:
+              type: string
+              default: '161'
+            X-Content-Type-Options:
+              type: string
+              default: nosniff
+            Referrer-Policy:
+              type: string
+              default: same-origin
+  /users/2/:
+    get:
+      summary: Get User Detail
+      tags:
+      - User
+      operationId: GetUserDetail
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/GetUserDetail'
+          examples:
+            application/json:
+              id: 2
+              username: user1
+              posts:
+              - 1
+              comments: []
+          headers:
+            Date:
+              type: string
+              default: Sat, 11 Sep 2021 01:07:59 GMT
+            Server:
+              type: string
+              default: WSGIServer/0.2 CPython/3.9.6
+            Vary:
+              type: string
+              default: Accept, Cookie
+            Allow:
+              type: string
+              default: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+            X-Frame-Options:
+              type: string
+              default: DENY
+            Content-Length:
+              type: string
+              default: '53'
+            X-Content-Type-Options:
+              type: string
+              default: nosniff
+            Referrer-Policy:
+              type: string
+              default: same-origin
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Don%27thavepermissions1'
+          examples:
+            application/json:
+              detail: Given token not valid for any token type
+              code: token_not_valid
+              messages:
+              - token_class: AccessToken
+                token_type: access
+                message: Token is invalid or expired
+          headers:
+            Date:
+              type: string
+              default: Sat, 11 Sep 2021 01:09:39 GMT
+            Server:
+              type: string
+              default: WSGIServer/0.2 CPython/3.9.6
+            WWW-Authenticate:
+              type: string
+              default: Basic realm="api"
+            Vary:
+              type: string
+              default: Accept, Cookie
+            Allow:
+              type: string
+              default: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+            X-Frame-Options:
+              type: string
+              default: DENY
+            Content-Length:
+              type: string
+              default: '183'
+            X-Content-Type-Options:
+              type: string
+              default: nosniff
+            Referrer-Policy:
+              type: string
+              default: same-origin
+  /users/1/:
+    put:
+      summary: Update User
+      tags:
+      - User
+      operationId: UpdateUser
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/UpdateUserRequest'
+      responses:
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Don%27thavepermissions3'
+          examples:
+            application/json:
+              detail: You do not have permission to perform this action.
+          headers:
+            Date:
+              type: string
+              default: Sat, 11 Sep 2021 00:15:36 GMT
+            Server:
+              type: string
+              default: WSGIServer/0.2 CPython/3.9.6
+            Vary:
+              type: string
+              default: Accept, Cookie
+            Allow:
+              type: string
+              default: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+            X-Frame-Options:
+              type: string
+              default: DENY
+            Content-Length:
+              type: string
+              default: '63'
+            X-Content-Type-Options:
+              type: string
+              default: nosniff
+            Referrer-Policy:
+              type: string
+              default: same-origin
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/UpdateUser'
+          examples:
+            application/json:
+              id: 1
+              username: user5
+              posts: []
+              comments:
+              - 1
+          headers:
+            Date:
+              type: string
+              default: Sat, 11 Sep 2021 00:19:23 GMT
+            Server:
+              type: string
+              default: WSGIServer/0.2 CPython/3.9.6
+            Vary:
+              type: string
+              default: Accept, Cookie
+            Allow:
+              type: string
+              default: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+            X-Frame-Options:
+              type: string
+              default: DENY
+            Content-Length:
+              type: string
+              default: '53'
+            X-Content-Type-Options:
+              type: string
+              default: nosniff
+            Referrer-Policy:
+              type: string
+              default: same-origin
+    delete:
+      summary: Delete User
+      tags:
+      - User
+      operationId: DeleteUser
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      responses:
+        '204':
+          description: No Content
+          headers:
+            Date:
+              type: string
+              default: Sat, 11 Sep 2021 00:22:21 GMT
+            Server:
+              type: string
+              default: WSGIServer/0.2 CPython/3.9.6
+            Vary:
+              type: string
+              default: Accept, Cookie
+            Allow:
+              type: string
+              default: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+            X-Frame-Options:
+              type: string
+              default: DENY
+            Content-Length:
+              type: string
+              default: '0'
+            X-Content-Type-Options:
+              type: string
+              default: nosniff
+            Referrer-Policy:
+              type: string
+              default: same-origin
+tags:
+- name: Auth
+- name: Post
+- name: Comment
+- name: User
