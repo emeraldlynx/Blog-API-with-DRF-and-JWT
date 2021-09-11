@@ -4,7 +4,7 @@ Auth API has users registration, login and obtaining JWT and refreshing JWT.<br>
 The entities of users, messages and comments fully support CRUD queries.<br>
 
 ## Why JWT?<br>
-JSON Web Token authentication method provides security. This way much safer than basic or token-in-db authentication.<br>
+JSON Web Token authentication method provides security. This way much safer than basic, session or token-in-db authentication.<br>
 
 ## Permissions
 - Each `User` can change only own data.<br>
@@ -13,7 +13,7 @@ JSON Web Token authentication method provides security. This way much safer than
 
 ## Documentation
 ### **Postman** [documentation](https://documenter.getpostman.com/view/9084501/U16kqQPr)
-### **OpenAPI** page allowed at `http://example.com/api/blog/openapi/` and **schema** by the `./blog/static/openapi/schema.yml`
+### **OpenAPI** page allowed at `http://example.com/openapi/` and **schema** by the `./blog/static/openapi/schema.yml`
 
 ---
 
